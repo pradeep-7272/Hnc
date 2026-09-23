@@ -437,6 +437,13 @@
   .foot-word { font-family: 'Big Shoulders Display', sans-serif; font-weight: 800; font-size: 16px; letter-spacing: 0.05em; }
   .foot-word span { color: var(--green); }
   .foot-tag { color: var(--ink-faint); font-size: 13.5px; }
+  .connect-row { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 26px; padding-top: 26px; border-top: 1px solid var(--line); }
+  .connect-item {
+    display: inline-flex; align-items: center; gap: 9px; color: var(--ink-dim); font-size: 14px;
+    text-decoration: none; transition: color 140ms ease;
+  }
+  .connect-item:hover { color: var(--green); }
+  .connect-item svg { width: 19px; height: 19px; flex: none; }
 
   :focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
 </style>
@@ -472,9 +479,9 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <div class="kicker"><span class="dot"></span> Run club &middot; open to all paces</div>
+        <div class="kicker"><span class="dot"></span> Run club &middot; open for all</div>
         <div class="tagline">More than Miles</div>
-        <h1 class="display">Train hybrid.<br>Run as <em>hnc</em> fam.</h1>
+        <h1 class="display">Train hybrid.<br>Run as <em>hnc</em> fam</h1>
         <p class="lede">Hybridnation is a run club for people who lift, run, and everything in between. No pace is too slow and no goal is too big &mdash; show up for the next session and we'll take it from there.</p>
         <div class="btn-row">
           <a href="#register" class="btn btn-primary">Register for the next run</a>
@@ -485,7 +492,7 @@
       <div class="bib" id="bib-card">
         <div class="bib-top">
           <span class="bib-label">Next run</span>
-          <span class="bib-num" id="bib-number">HNC</span>
+          <span class="bib-num" id="bib-number">HNC-000</span>
         </div>
         <div id="bib-content">
           <p class="bib-empty">Loading the next run&hellip;</p>
@@ -502,7 +509,6 @@
     <div class="wrap">
       <div class="section-head">
         <h2 class="display">The next run</h2>
-        <p>Pulled straight from the club calendar. Details here are always the latest &mdash; if a run gets moved, this section updates with it.</p>
       </div>
 
       <div class="stat-strip" id="stat-strip">
@@ -701,6 +707,22 @@
     </div>
     <div class="foot-tag">More than Miles &middot; HNC &copy; 2026</div>
   </div>
+
+  <div class="wrap connect-row">
+    <a class="connect-item" href="https://www.instagram.com/hybridnation_?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      hybridnation_
+    </a>
+    <!-- Replace "#" with your WhatsApp community invite link (e.g. https://chat.whatsapp.com/xxxxxxxx) -->
+    <a class="connect-item" href="#" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      Community
+    </a>
+    <a class="connect-item" href="mailto:hybridnation@gmail.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+      hybridnation@gmail.com
+    </a>
+  </div>
 </footer>
 
 <script>
@@ -710,9 +732,7 @@
    public anon key (Project Settings -> API in Supabase).
    ========================================================= */
    const SUPABASE_URL = "https://jirtyphxovcgdeudzhqa.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImppcnR5cGh4b3ZjZ2RldWR6aHFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1NTU0MDIsImV4cCI6MjEwNTEzMTQwMn0.1IqcfckpT_lyHwm185AvA9T22sy1nlEdwXSBP6ZksQo";
-
-
+   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImppcnR5cGh4b3ZjZ2RldWR6aHFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1NTU0MDIsImV4cCI6MjEwNTEzMTQwMn0.1IqcfckpT_lyHwm185AvA9T22sy1nlEdwXSBP6ZksQo";
 /* Renamed to supabaseClient (not "supabase") so it doesn't collide
    with the global `supabase` object the supabase-js library itself
    creates on window. Using the same name for both causes
