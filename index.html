@@ -201,14 +201,25 @@
   .hero-video-bg {
     position: absolute;
     top: 50%; left: 50%;
-    /* Sized by the video's real aspect ratio (16:9) so it always
-       covers the box by cropping edges, never by stretching. */
     width: 100%;
     height: 100%;
-    min-width: 177.78vh;  /* 16/9 * 100vh */
-    min-height: 56.25vw;  /* 9/16 * 100vw */
     transform: translate(-50%, -50%);
     border: 0; pointer-events: none; z-index: 0;
+  }
+  /* Landscape (16:9) source: shown on desktop. */
+  .hero-video-desktop {
+    min-width: 177.78vh;  /* 16/9 * 100vh */
+    min-height: 56.25vw;  /* 9/16 * 100vw */
+  }
+  /* Portrait (9:16) source: shown on mobile. */
+  .hero-video-mobile {
+    display: none;
+    min-width: 56.25vh;   /* 9/16 * 100vh */
+    min-height: 177.78vw; /* 16/9 * 100vw */
+  }
+  @media (max-width: 900px) {
+    .hero-video-desktop { display: none; }
+    .hero-video-mobile { display: block; }
   }
   .hero-video-overlay {
     position: absolute; inset: 0; z-index: 1;
@@ -533,8 +544,13 @@
 
   <section class="hero">
     <iframe
-      class="hero-video-bg"
+      class="hero-video-bg hero-video-desktop"
       src="https://iframe.mediadelivery.net/embed/762904/effebc94-f399-4965-b0b6-43359b64d89d?autoplay=true&loop=true&muted=true&preload=true&controls=false&responsive=true"
+      loading="eager" allow="autoplay; fullscreen" allowfullscreen>
+    </iframe>
+    <iframe
+      class="hero-video-bg hero-video-mobile"
+      src="https://iframe.mediadelivery.net/embed/762904/f457afc9-0fef-43f0-84d2-4d6b9bbaaa58?autoplay=true&loop=true&muted=true&preload=true&controls=false&responsive=true"
       loading="eager" allow="autoplay; fullscreen" allowfullscreen>
     </iframe>
     <div class="hero-video-overlay"></div>
@@ -799,6 +815,7 @@
    ========================================================= */
    const SUPABASE_URL = "https://jirtyphxovcgdeudzhqa.supabase.co";
    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImppcnR5cGh4b3ZjZ2RldWR6aHFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1NTU0MDIsImV4cCI6MjEwNTEzMTQwMn0.1IqcfckpT_lyHwm185AvA9T22sy1nlEdwXSBP6ZksQo";
+
 
 /* Renamed to supabaseClient (not "supabase") so it doesn't collide
    with the global `supabase` object the supabase-js library itself
