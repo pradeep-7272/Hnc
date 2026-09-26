@@ -323,15 +323,22 @@
   .section-head p { color: var(--ink-dim); font-size: 16px; line-height: 1.6; margin: 0; }
 
   .stat-strip {
-    display: grid; grid-template-columns: repeat(4, 1fr);
     border: 1px solid var(--line); border-radius: 4px; overflow: hidden;
     margin-bottom: 34px;
   }
+  .stat-row-top {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border-bottom: 1px solid var(--line);
+  }
+  .stat-row-bottom {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
   .stat-cell { padding: 22px 20px; border-right: 1px solid var(--line); background: var(--black); }
-  .stat-cell:last-child { border-right: none; }
+  .stat-row-top .stat-cell:last-child { border-right: none; }
+  .stat-row-bottom .stat-cell { border-right: none; flex: 1; }
   .stat-cell-label { font-size: 12.5px; color: var(--ink-faint); margin-bottom: 8px; }
   .stat-cell-value { font-family: 'Space Mono', monospace; font-size: clamp(18px, 2.4vw, 24px); color: var(--green); word-break: break-word; }
-  .stat-cell-value.with-gps { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .stat-cell-value.with-gps { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
   .gps-link {
     display: inline-flex; align-items: center; justify-content: center;
     width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--green-dim);
@@ -347,8 +354,8 @@
   }
   .bib-gps-link svg { width: 11px; height: 11px; display: block; }
   @media (max-width: 760px) {
-    .stat-strip { grid-template-columns: 1fr 1fr; }
-    .stat-cell { border-bottom: 1px solid var(--line); }
+    .stat-row-top { grid-template-columns: 1fr; }
+    .stat-row-top .stat-cell { border-right: none; border-bottom: 1px solid var(--line); }
   }
 
   .run-desc { color: var(--ink-dim); font-size: 16px; line-height: 1.75; max-width: 68ch; }
@@ -567,10 +574,14 @@
       </div>
 
       <div class="stat-strip" id="stat-strip">
-        <div class="stat-cell"><div class="stat-cell-label">Date</div><div class="stat-cell-value" id="stat-date">&mdash;</div></div>
-        <div class="stat-cell"><div class="stat-cell-label">Time</div><div class="stat-cell-value" id="stat-time">&mdash;</div></div>
-        <div class="stat-cell"><div class="stat-cell-label">Distance</div><div class="stat-cell-value" id="stat-distance">&mdash;</div></div>
-        <div class="stat-cell"><div class="stat-cell-label">Meet point</div><div class="stat-cell-value with-gps"><span id="stat-location">&mdash;</span><a href="#" id="stat-location-gps" class="gps-link" target="_blank" rel="noopener noreferrer" hidden aria-label="Open meet point in Google Maps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></a></div></div>
+        <div class="stat-row-top">
+          <div class="stat-cell"><div class="stat-cell-label">Date</div><div class="stat-cell-value" id="stat-date">&mdash;</div></div>
+          <div class="stat-cell"><div class="stat-cell-label">Time</div><div class="stat-cell-value" id="stat-time">&mdash;</div></div>
+          <div class="stat-cell"><div class="stat-cell-label">Distance</div><div class="stat-cell-value" id="stat-distance">&mdash;</div></div>
+        </div>
+        <div class="stat-row-bottom">
+          <div class="stat-cell"><div class="stat-cell-label">Meet point</div><div class="stat-cell-value with-gps"><span id="stat-location">&mdash;</span><a href="#" id="stat-location-gps" class="gps-link" target="_blank" rel="noopener noreferrer" hidden aria-label="Open meet point in Google Maps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></a></div></div>
+        </div>
       </div>
 
       <p class="run-desc" id="run-description">Loading run details&hellip;</p>
@@ -788,7 +799,6 @@
    ========================================================= */
    const SUPABASE_URL = "https://jirtyphxovcgdeudzhqa.supabase.co";
    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImppcnR5cGh4b3ZjZ2RldWR6aHFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1NTU0MDIsImV4cCI6MjEwNTEzMTQwMn0.1IqcfckpT_lyHwm185AvA9T22sy1nlEdwXSBP6ZksQo";
-
 
 /* Renamed to supabaseClient (not "supabase") so it doesn't collide
    with the global `supabase` object the supabase-js library itself
