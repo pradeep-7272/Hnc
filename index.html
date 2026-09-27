@@ -303,7 +303,12 @@
       position: absolute; top: 0; right: 15mm;
       width: clamp(360px, 30vw, 460px);
       transform: rotate(0deg);
+      background: rgba(16, 36, 26, 0.55);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
     }
+    #bib-card .bib-stats { grid-template-columns: repeat(3, 1fr); gap: 14px 10px; }
+    #bib-card .bib-stats > div:nth-child(4) { grid-column: 1 / -1; }
   }
   .kicker {
     color: var(--green); font-weight: 600; font-size: 13.5px;
@@ -605,9 +610,9 @@
     <div class="hero-video-overlay"></div>
     <div class="wrap hero-grid">
       <div class="hero-text">
-        <div class="kicker"><span class="dot"></span> Run club &middot; open for all</div>
+        <div class="kicker"><span class="dot"></span> Run club &middot; open to all paces</div>
         <div class="tagline">More than Miles</div>
-        <h1 class="display">Train hybrid.<br>Run as <em>hnc</em> fam</h1>
+        <h1 class="display">Train hybrid.<br>Run as <em>one</em> crew.</h1>
       </div>
       <div class="hero-desc">
         <p class="lede">Hybridnation is a run club for people who lift, run, and everything in between. No pace is too slow and no goal is too big &mdash; show up for the next session and we'll take it from there.</p>
@@ -637,7 +642,7 @@
     <div class="wrap">
       <div class="section-head">
         <h2 class="display">The next run</h2>
-       <!--<p>Pulled straight from the club calendar. Details here are always the latest &mdash; if a run gets moved, this section updates with it.</p> -->
+        <p>Pulled straight from the club calendar. Details here are always the latest &mdash; if a run gets moved, this section updates with it.</p>
       </div>
 
       <div class="stat-strip" id="stat-strip">
@@ -702,8 +707,8 @@
                   <option value="" disabled selected>Select&hellip;</option>
                   <option value="female">Female</option>
                   <option value="male">Male</option>
-                  <!-- <option value="non_binary">Non-binary</option>
-                  <option value="prefer_not_to_say">Prefer not to say</option> -->
+                  <option value="non_binary">Non-binary</option>
+                  <option value="prefer_not_to_say">Prefer not to say</option>
                 </select>
               </div>
               <div class="field">
@@ -866,7 +871,6 @@
    ========================================================= */
    const SUPABASE_URL = "https://jirtyphxovcgdeudzhqa.supabase.co";
    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImppcnR5cGh4b3ZjZ2RldWR6aHFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1NTU0MDIsImV4cCI6MjEwNTEzMTQwMn0.1IqcfckpT_lyHwm185AvA9T22sy1nlEdwXSBP6ZksQo";
-
 
 /* Renamed to supabaseClient (not "supabase") so it doesn't collide
    with the global `supabase` object the supabase-js library itself
