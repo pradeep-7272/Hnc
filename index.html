@@ -384,6 +384,12 @@
   .section-head { max-width: 62ch; margin-bottom: 40px; }
   .section-head h2 { font-size: clamp(30px, 4.4vw, 46px); margin: 0 0 12px; }
   .section-head p { color: var(--ink-dim); font-size: 16px; line-height: 1.6; margin: 0; }
+  .run-title {
+    font-family: 'Big Shoulders Display', 'Inter', sans-serif;
+    font-weight: 800; text-transform: uppercase; letter-spacing: 0.01em;
+    font-size: clamp(24px, 3.6vw, 38px); color: var(--green);
+    margin: -14px 0 26px;
+  }
 
   .stat-strip {
     border: 1px solid var(--line); border-radius: 4px; overflow: hidden;
@@ -417,8 +423,14 @@
   }
   .bib-gps-link svg { width: 11px; height: 11px; display: block; }
   @media (max-width: 760px) {
-    .stat-row-top { grid-template-columns: 1fr; }
+    .stat-row-top { grid-template-columns: repeat(2, 1fr); }
     .stat-row-top .stat-cell { border-right: none; border-bottom: 1px solid var(--line); }
+    .stat-row-top .stat-cell:nth-child(2) { border-right: 1px solid var(--line); }
+    .stat-row-top .stat-cell:first-child { grid-column: 1 / -1; border-right: none; }
+    .stat-cell { padding: 13px 14px; }
+    .stat-cell-label { margin-bottom: 4px; }
+    .run-title { margin: -10px 0 16px; font-size: clamp(20px, 5vw, 26px); }
+    #next-run .section-head { margin-bottom: 24px; }
   }
 
   .run-desc { color: var(--ink-dim); font-size: 16px; line-height: 1.75; max-width: 68ch; }
@@ -662,7 +674,7 @@
     <div class="hero-video-overlay"></div>
     <div class="wrap hero-grid">
       <div class="hero-text">
-        <div class="kicker"><span class="dot"></span> Run club &middot; open to all paces</div>
+        <div class="kicker"><span class="dot"></span> Run club &middot; open for all</div>
         <div class="tagline">More than Miles</div>
         <h1 class="display">Train hybrid.<br>Run as <em>hnc</em> fam</h1>
       </div>
@@ -695,8 +707,10 @@
       <a href="#top" class="page-back">&larr; Back to home</a>
       <div class="section-head">
         <h2 class="display">The next run</h2>
-       <!-- <p>Pulled straight from the club calendar. Details here are always the latest &mdash; if a run gets moved, this section updates with it.</p> -->
+        <!-- <p>Pulled straight from the club calendar. Details here are always the latest &mdash; if a run gets moved, this section updates with it.</p> -->
       </div>
+
+      <div class="run-title" id="run-title"><h1>Loading&hellip;</h1></div>
 
       <div class="stat-strip" id="stat-strip">
         <div class="stat-row-top">
@@ -896,7 +910,7 @@
   <div class="wrap connect-row">
     <a class="connect-item" href="https://www.instagram.com/hybridnation_?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram: hybridnation_">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-      <span class="lbl-full">hybridnation_</span><span class="lbl-short">HNC</span>
+      <span class="lbl-full">hybridnation_</span><span class="lbl-short">hybridnation_</span>
     </a>
     <!-- Replace "#" with your WhatsApp community invite link (e.g. https://chat.whatsapp.com/xxxxxxxx) -->
     <a class="connect-item" href="#" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp community">
@@ -905,7 +919,7 @@
     </a>
     <a class="connect-item" href="mailto:hybridnation@gmail.com" aria-label="Email: hybridnation@gmail.com">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
-      <span class="lbl-full">hybridnation@gmail.com</span><span class="lbl-short">Mail</span>
+      <span class="lbl-full">hybridnation@gmail.com</span><span class="lbl-short">Mail Us</span>
     </a>
   </div>
 </footer>
@@ -976,6 +990,7 @@ async function loadNextRun() {
     bibContent.innerHTML = '<p class="bib-empty">Connect Supabase and add a row to the <strong>events</strong> table to show the next run here.</p>';
     document.getElementById("run-description").textContent = "Connect Supabase to pull in the next run's details automatically.";
     document.getElementById("run-description").classList.add("empty");
+    document.getElementById("run-title").hidden = true;
     return;
   }
   try {
@@ -991,17 +1006,20 @@ async function loadNextRun() {
       bibContent.innerHTML = '<p class="bib-empty">No run scheduled yet &mdash; check back soon.</p>';
       document.getElementById("run-description").textContent = "Nothing on the calendar right now. Add an upcoming event in Supabase to publish it here.";
       document.getElementById("run-description").classList.add("empty");
+      document.getElementById("run-title").hidden = true;
       return;
     }
     nextEvent = data[0];
     document.getElementById("bib-number").textContent = nextEvent.bib_number || "HNC-000";
+    document.getElementById("run-title").textContent = nextEvent.title || "Club run";
     document.getElementById("stat-date").textContent = fmtDate(nextEvent.run_date);
     document.getElementById("stat-time").textContent = fmtTime(nextEvent.run_time);
     document.getElementById("stat-distance").textContent = nextEvent.distance_km ? nextEvent.distance_km + " km" : "\u2014";
     document.getElementById("stat-location").textContent = nextEvent.location || "\u2014";
     const gpsLink = document.getElementById("stat-location-gps");
-    if (nextEvent.location) {
-      gpsLink.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(nextEvent.location);
+    const mapsUrl = nextEvent.location_link || (nextEvent.location ? "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(nextEvent.location) : "");
+    if (mapsUrl) {
+      gpsLink.href = mapsUrl;
       gpsLink.hidden = false;
     } else {
       gpsLink.hidden = true;
@@ -1016,7 +1034,7 @@ async function loadNextRun() {
         <div><div class="bib-stat-label">Date</div><div class="bib-stat-value">${escapeHtml(fmtDate(nextEvent.run_date))}</div></div>
         <div><div class="bib-stat-label">Time</div><div class="bib-stat-value">${escapeHtml(fmtTime(nextEvent.run_time))}</div></div>
         <div><div class="bib-stat-label">Distance</div><div class="bib-stat-value">${nextEvent.distance_km ? escapeHtml(String(nextEvent.distance_km)) + " km" : "\u2014"}</div></div>
-        <div><div class="bib-stat-label">Meet point</div><div class="bib-stat-value">${escapeHtml(nextEvent.location || "\u2014")}${nextEvent.location ? `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(nextEvent.location)}" target="_blank" rel="noopener noreferrer" class="bib-gps-link" aria-label="Open meet point in Google Maps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></a>` : ""}</div></div>
+        <div><div class="bib-stat-label">Meet point</div><div class="bib-stat-value">${escapeHtml(nextEvent.location || "\u2014")}${mapsUrl ? `<a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="bib-gps-link" aria-label="Open meet point in Google Maps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></a>` : ""}</div></div>
       </div>
       <div class="bib-actions">
         <a href="#register" class="btn btn-primary">Register<span class="only-desktop"> now</span></a>
