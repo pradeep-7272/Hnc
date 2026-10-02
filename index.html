@@ -781,16 +781,9 @@
               <label for="f-name">Full name</label>
               <input id="f-name" name="full_name" type="text" autocomplete="name" required>
             </div>
-               <!--
-            <div class="field-row">
-              <div class="field">
-                <label for="f-email">Email</label>
-                <input id="f-email" name="email" type="email" autocomplete="email" required>
-              </div> -->
-              <div class="field">
-                <label for="f-phone">Phone number</label>
-                <input id="f-phone" name="phone" type="tel" autocomplete="tel" required>
-              </div>
+            <div class="field">
+              <label for="f-phone">Phone number</label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" required>
             </div>
             <div class="field-row">
               <div class="field">
@@ -816,17 +809,6 @@
                 <option value="no">No &mdash; I've run with HNC before</option>
               </select>
             </div>
-
-            <!-- <div class="field-row">
-              <div class="field">
-                <label for="f-ec-name">Emergency contact name</label>
-                <input id="f-ec-name" name="emergency_contact_name" type="text" required>
-              </div>
-              <div class="field">
-                <label for="f-ec-phone">Emergency contact phone</label>
-                <input id="f-ec-phone" name="emergency_contact_phone" type="tel" required>
-              </div>
-            </div> -->
 
             <label class="agree" for="f-agree">
               <input id="f-agree" type="checkbox" required>
@@ -1161,19 +1143,16 @@ form.addEventListener("submit", async (e) => {
   const payload = {
     event_id: nextEvent ? nextEvent.id : null,
     full_name: document.getElementById("f-name").value.trim(),
-    email: document.getElementById("f-email").value.trim(),
     phone: document.getElementById("f-phone").value.trim(),
     gender: document.getElementById("f-gender").value,
     age: ageValue ? parseInt(ageValue, 10) : null,
     is_first_time: document.getElementById("f-first-time").value === "yes",
-    emergency_contact_name: document.getElementById("f-ec-name").value.trim(),
-    emergency_contact_phone: document.getElementById("f-ec-phone").value.trim(),
     declaration_agreed: true
   };
 
   const firstTimeSelected = document.getElementById("f-first-time").value !== "";
 
-  if (!payload.full_name || !payload.email || !payload.phone || !payload.gender || !payload.age || !firstTimeSelected || !payload.emergency_contact_name || !payload.emergency_contact_phone) {
+  if (!payload.full_name || !payload.phone || !payload.gender || !payload.age || !firstTimeSelected) {
     msg.textContent = "Fill in every field before submitting.";
     msg.classList.add("err");
     return;
