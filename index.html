@@ -204,6 +204,7 @@
     padding: 96px 0 56px;
     box-sizing: border-box;
   }
+  video.hero-video-bg { object-fit: cover; }
   .hero-video-bg {
     position: absolute;
     top: 50%; left: 50%;
@@ -676,16 +677,12 @@
 
   <section class="hero">
       
-    <iframe
-      class="hero-video-bg hero-video-desktop"
-      src="https://player.mediadelivery.net/embed/779459/c249228f-b140-4ea1-a938-a5da5226e5cf?autoplay=true&loop=true&muted=true&preload=true&responsive=true"
-      loading="eager" allow="autoplay; fullscreen" allowfullscreen>
-    </iframe>
-    <iframe
-      class="hero-video-bg hero-video-mobile"
-      src="https://player.mediadelivery.net/embed/779459/c249228f-b140-4ea1-a938-a5da5226e5cf?autoplay=true&loop=true&muted=true&preload=true&responsive=true"
-      loading="eager" allow="autoplay; fullscreen" allowfullscreen>
-    </iframe> 
+    <video
+      class="hero-video-bg"
+      src="background.mp4"
+      autoplay muted loop playsinline preload="auto"
+      disablepictureinpicture>
+    </video>
     <div class="hero-video-overlay"></div>
     <div class="wrap hero-grid">
       <div class="hero-text">
